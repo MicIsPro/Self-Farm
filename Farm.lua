@@ -387,6 +387,7 @@ StatusGroupBox:AddButton({
         local ScreenGui = Instance.new("ScreenGui")
         ScreenGui.Name = "AccountStatusGUI"
         ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        ScreenGui.ResetOnSpawn = false
         ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 
         local MainFrame = Instance.new("Frame")
