@@ -259,6 +259,68 @@ TeleportGroupBox:AddButton({
 })
 
 TeleportGroupBox:AddButton({
+    Text = "Setup 1",
+    Func = function()
+        task.spawn(function()
+            local targetPlayer = nil
+            for _, player in pairs(Players:GetPlayers()) do
+                if player.Name == "j07_01" then
+                    targetPlayer = player
+                    break
+                end
+            end
+            
+            if not targetPlayer or not targetPlayer.Character then
+                Library:Notify({
+                    Title = "Error",
+                    Description = "j07_01 not found",
+                    Time = 2,
+                })
+                return
+            end
+            
+            local targetRoot = getRoot(targetPlayer.Character)
+            local myRoot = getRoot(LocalPlayer.Character)
+            
+            if not targetRoot or not myRoot then return end
+            
+            local backAttachConnection = RunService.Heartbeat:Connect(function()
+                local tRoot = getRoot(targetPlayer.Character)
+                local mRoot = getRoot(LocalPlayer.Character)
+                
+                if tRoot and mRoot then
+                    local offset = tRoot.CFrame.LookVector * -3
+                    mRoot.CFrame = CFrame.new(tRoot.Position + offset, tRoot.Position)
+                end
+            end)
+            
+            task.wait(0.2)
+            
+            local vim = game:GetService("VirtualInputManager")
+            vim:SendKeyEvent(true, Enum.KeyCode.One, false, game)
+            vim:SendKeyEvent(false, Enum.KeyCode.One, false, game)
+            
+            task.wait(0.7)
+            
+            backAttachConnection:Disconnect()
+            
+            local myRootFinal = getRoot(LocalPlayer.Character)
+            if myRootFinal then
+                local teleportPosition = Vector3.new(-73, 3, 941)
+                myRootFinal.CFrame = CFrame.new(teleportPosition)
+            end
+            
+            Library:Notify({
+                Title = "Setup 1 Complete",
+                Description = "Sequence finished for j07_01",
+                Time = 2,
+            })
+        end)
+    end,
+    Tooltip = "Setup sequence for j07_01 only",
+})
+
+TeleportGroupBox:AddButton({
     Text = "Create TP Tool",
     Func = function()
         createTeleportTool()
