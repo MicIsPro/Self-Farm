@@ -321,6 +321,23 @@ TeleportGroupBox:AddButton({
 })
 
 TeleportGroupBox:AddButton({
+    Text = "TP to Plate",
+    Func = function()
+        local myRoot = getRoot(LocalPlayer.Character)
+        if myRoot then
+            local platePosition = Vector3.new(-73, 3, 941)
+            myRoot.CFrame = CFrame.new(platePosition)
+            Library:Notify({
+                Title = "Teleported",
+                Description = "Teleported to plate",
+                Time = 2,
+            })
+        end
+    end,
+    Tooltip = "Teleport to plate position",
+})
+
+TeleportGroupBox:AddButton({
     Text = "Create TP Tool",
     Func = function()
         createTeleportTool()
