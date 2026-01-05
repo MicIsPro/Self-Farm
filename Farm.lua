@@ -245,7 +245,7 @@ TeleportGroupBox:AddButton({
             
             local myRootFinal = getRoot(LocalPlayer.Character)
             if myRootFinal then
-                local teleportPosition = Vector3.new(-73, 3, 941)
+                local teleportPosition = Vector3.new(-73, 86, 941)
                 myRootFinal.CFrame = CFrame.new(teleportPosition)
             end
             
@@ -307,7 +307,7 @@ TeleportGroupBox:AddButton({
             
             local myRootFinal = getRoot(LocalPlayer.Character)
             if myRootFinal then
-                local teleportPosition = Vector3.new(-73, 3, 941)
+                local teleportPosition = Vector3.new(-73, 86, 941)
                 myRootFinal.CFrame = CFrame.new(teleportPosition)
             end
             
