@@ -32,6 +32,7 @@ local Window = Library:CreateWindow({
 
 local Tabs = {
     Main = Window:AddTab("Main", "zap"),
+    FPS = Window:AddTab("FPS", "gauge"),
     Settings = Window:AddTab("Settings", "settings"),
 }
 
@@ -608,10 +609,141 @@ StatusGroupBox:AddButton({
     Tooltip = "Opens account status tracker",
 })
 
+local WorldGroupBox = Tabs.FPS:AddLeftGroupbox("World Modifications", "trash-2")
+
+WorldGroupBox:AddButton({
+    Text = "Delete Invis Walls",
+    Func = function()
+        local tempCollision = workspace:FindFirstChild("TempCollision")
+        if tempCollision then
+            tempCollision:Destroy()
+            Library:Notify({
+                Title = "Success",
+                Description = "Invisible walls deleted",
+                Time = 2,
+            })
+        else
+            Library:Notify({
+                Title = "Not Found",
+                Description = "TempCollision not found",
+                Time = 2,
+            })
+        end
+    end,
+    Tooltip = "Deletes workspace.TempCollision",
+})
+
+WorldGroupBox:AddButton({
+    Text = "Anti Lag",
+    Func = function()
+        local map = workspace:FindFirstChild("Map")
+        if map then
+            local destroyableParts = map:FindFirstChild("DestroyableParts")
+            local bar = map:FindFirstChild("BAR")
+            
+            if destroyableParts then
+                destroyableParts:Destroy()
+            end
+            
+            if bar then
+                bar:Destroy()
+            end
+            
+            Library:Notify({
+                Title = "Success",
+                Description = "Anti lag applied",
+                Time = 2,
+            })
+        else
+            Library:Notify({
+                Title = "Error",
+                Description = "Map not found",
+                Time = 2,
+            })
+        end
+    end,
+    Tooltip = "Deletes DestroyableParts and BAR",
+})
+
+WorldGroupBox:AddButton({
+    Text = "Delete Map (Not Full)",
+    Func = function()
+        local map = workspace:FindFirstChild("Map")
+        if map then
+            for _, child in pairs(map:GetChildren()) do
+                if child.Name:lower() ~= "baseplate" then
+                    child:Destroy()
+                end
+            end
+            Library:Notify({
+                Title = "Success",
+                Description = "Map deleted (Baseplate kept)",
+                Time = 2,
+            })
+        else
+            Library:Notify({
+                Title = "Error",
+                Description = "Map not found",
+                Time = 2,
+            })
+        end
+    end,
+    Tooltip = "Deletes map except baseplate",
+})
+
+WorldGroupBox:AddButton({
+    Text = "Delete FULL Map",
+    Func = function()
+        local map = workspace:FindFirstChild("Map")
+        if map then
+            map:Destroy()
+            Library:Notify({
+                Title = "Success",
+                Description = "Full map deleted",
+                Time = 2,
+            })
+        else
+            Library:Notify({
+                Title = "Error",
+                Description = "Map not found",
+                Time = 2,
+            })
+        end
+    end,
+    Tooltip = "Deletes entire workspace.Map",
+})
+
+local MiscGroupBox = Tabs.FPS:AddRightGroupbox("Miscellaneous", "box")
+
+MiscGroupBox:AddButton({
+    Text = "Bring LB",
+    Func = function()
+        local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local monthlyFrame = workspace:FindFirstChild("MonthlyLeaderboard")
+        
+        if monthlyFrame then
+            monthlyFrame.CFrame = humanoidRootPart.CFrame * CFrame.new(0, 5, 0)
+            Library:Notify({
+                Title = "Success",
+                Description = "Leaderboard brought to you",
+                Time = 2,
+            })
+        else
+            Library:Notify({
+                Title = "Error",
+                Description = "MonthlyLeaderboard not found",
+                Time = 2,
+            })
+        end
+    end,
+    Tooltip = "Brings MonthlyLeaderboard to your position",
+})
+
 local InfoGroupBox = Tabs.Settings:AddLeftGroupbox("Information", "info")
 
 InfoGroupBox:AddLabel("Created by: Devotion_M")
-InfoGroupBox:AddLabel("Version: 1.0")
+InfoGroupBox:AddLabel("Version: 1.1")
 InfoGroupBox:AddDivider()
 InfoGroupBox:AddLabel("Discord: Devotion_M")
 
