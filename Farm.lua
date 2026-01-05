@@ -666,6 +666,32 @@ WorldGroupBox:AddButton({
 })
 
 WorldGroupBox:AddButton({
+    Text = "Potato Mode",
+    Func = function()
+        local effects = workspace:FindFirstChild("Effects")
+        if effects then
+            for _, child in pairs(effects:GetChildren()) do
+                if child.Name ~= "PreloadingAnimsDontDeleteTHREE" and child.Name ~= "PreloadingAnimsDontDeleteTWO" then
+                    child:Destroy()
+                end
+            end
+        end
+        
+        local tempCollision = workspace:FindFirstChild("TempCollision")
+        if tempCollision then
+            tempCollision:Destroy()
+        end
+        
+        Library:Notify({
+            Title = "Success",
+            Description = "Potato mode applied",
+            Time = 2,
+        })
+    end,
+    Tooltip = "Deletes Effects (except preloading) and TempCollision",
+})
+
+WorldGroupBox:AddButton({
     Text = "Delete Map (Not Full)",
     Func = function()
         local map = workspace:FindFirstChild("Map")
