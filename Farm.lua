@@ -326,7 +326,7 @@ TeleportGroupBox:AddButton({
     Func = function()
         local myRoot = getRoot(LocalPlayer.Character)
         if myRoot then
-            local platePosition = Vector3.new(-73, 3, 941)
+            local platePosition = Vector3.new(-73, 86, 941)
             myRoot.CFrame = CFrame.new(platePosition)
             Library:Notify({
                 Title = "Teleported",
