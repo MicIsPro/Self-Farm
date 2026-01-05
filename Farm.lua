@@ -21,6 +21,8 @@ local iframeEnabled = false
 local noclipEnabled = false
 local debugEnabled = false
 local selectedTarget = "Devotion_M"
+local animationMode = "Todo v1"
+local customAnimID = ""
 
 local Window = Library:CreateWindow({
     Title = "Kill Farming UI",
@@ -48,14 +50,36 @@ TargetGroupBox:AddDropdown("TargetPlayer", {
     end,
 })
 
-TargetGroupBox:AddInput("AnimationID", {
-    Default = tostring(AnimationID),
+TargetGroupBox:AddDropdown("AnimationMode", {
+    Values = {"Todo v1", "Dabi v1", "Custom"},
+    Default = 1,
+    Multi = false,
+    Text = "Animation Mode",
+    Callback = function(Value)
+        animationMode = Value
+        if Value == "Todo v1" then
+            AnimationID = 15660817775
+        elseif Value == "Dabi v1" then
+            AnimationID = 14911560173
+        elseif Value == "Custom" then
+            if customAnimID ~= "" then
+                AnimationID = tonumber(customAnimID) or 15660817775
+            end
+        end
+    end,
+})
+
+TargetGroupBox:AddInput("CustomAnimationID", {
+    Default = "",
     Numeric = true,
     Finished = false,
-    Text = "Animation ID",
+    Text = "Custom Animation ID",
     Placeholder = "Enter Animation ID",
     Callback = function(Value)
-        AnimationID = tonumber(Value) or AnimationID
+        customAnimID = Value
+        if animationMode == "Custom" and Value ~= "" then
+            AnimationID = tonumber(Value) or AnimationID
+        end
     end,
 })
 
@@ -831,7 +855,7 @@ end
 
 function createTeleportTool()
     local backpack = LocalPlayer:WaitForChild("Backpack")
-    local teleportPosition = Vector3.new(-73, 3, 941)
+    local teleportPosition = Vector3.new(-73, 86, 941)
     
     local tool = Instance.new("Tool")
     tool.Name = "WayPoint Tool"
